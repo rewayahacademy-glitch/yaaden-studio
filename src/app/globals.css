@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Palette principale */
+  --color-cta: #FE5943;
+  --color-title: #263244;
+  --color-body: #737C89;
+  --color-bg: #FFFFFF;
+  --color-section: #F5F7FA;
+  --color-border: #E3E8EE;
+
+  /* Alertes */
+  --color-amber-border: #F59E0B;
+  --color-amber-bg: #FEF3C7;
+  --color-red-overlay: rgba(255, 74, 43, 0.12);
+
+  /* Agents */
+  --agent-master: #263244;
+  --agent-master-light: #EEF0F4;
+  --agent-atomizer: #FE5943;
+  --agent-atomizer-light: #FFF0EE;
+  --agent-archiviste: #0284C7;
+  --agent-archiviste-light: #E0F2FE;
+  --agent-garde-fou: #7C3AED;
+  --agent-garde-fou-light: #EDE9FE;
+
+  /* Statuts atomes */
+  --atom-pending: #CBD5E1;
+  --atom-active: #0284C7;
+  --atom-completed: #16A34A;
+  --atom-blocked: #DC2626;
+
+  /* Utilitaires */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 4px rgba(38, 50, 68, 0.08);
+  --shadow-md: 0 4px 16px rgba(38, 50, 68, 0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Lato', system-ui, sans-serif;
+  font-size: 14px;
+  background: var(--color-bg);
+  color: var(--color-title);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+button { font-family: inherit; cursor: pointer; }
+input, select, textarea { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
