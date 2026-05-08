@@ -4,16 +4,24 @@ import { buildMasterPrompt } from '@/agents/masterAgent';
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
+  if (!process.env.GEMINI_API_KEY) {
+    return new Response('GEMINI_API_KEY manquante dans les variables d\'environnement Vercel', { status: 500 });
+  }
+
   const { braindump } = await req.json();
 
   if (!braindump?.trim()) {
     return new Response('Braindump requis', { status: 400 });
   }
 
-  const model = getModel('flash');
-  const prompt = buildMasterPrompt(braindump);
-
-  const result = await model.generateContentStream(prompt);
+  let result;
+  try {
+    const model = getModel('flash');
+    const prompt = buildMasterPrompt(braindump);
+    result = await model.generateContentStream(prompt);
+  } catch (err) {
+    return new Response(`Erreur Gemini : ${err instanceof Error ? err.message : String(err)}`, { status: 502 });
+  }
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream({

@@ -39,7 +39,10 @@ export default function SessionView() {
         body: JSON.stringify({ braindump }),
       });
 
-      if (!res.ok || !res.body) throw new Error('Réponse Master invalide');
+      if (!res.ok || !res.body) {
+        const errText = await res.text().catch(() => 'Réponse Master invalide');
+        throw new Error(errText || 'Réponse Master invalide');
+      }
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -64,9 +67,14 @@ export default function SessionView() {
           }
         }
       }
-    } catch {
-      masterContent = 'Une erreur est survenue lors de la connexion à l\'Agent Master.';
-      updateBubble(masterId, { content: masterContent });
+    } catch (err) {
+      masterContent = '';
+      updateBubble(masterId, {
+        content: `Erreur Agent Master : ${err instanceof Error ? err.message : String(err)}`,
+        isStreaming: false,
+      });
+      setIsProcessing(false);
+      return;
     }
 
     updateBubble(masterId, { isStreaming: false });
